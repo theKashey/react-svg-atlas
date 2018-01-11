@@ -1,0 +1,79 @@
+{
+  "name": "react-svg-atlas",
+  "version": "1.0.0",
+  "description": "Plurality is not to be posited without necessity",
+  "main": "dist/index.js",
+  "types": "react-svg-atlas.d.ts",
+  "scripts": {
+    "build": "babel src -d dist",
+    "test": "npm run test:pick -- '_tests/**/*spec.js'",
+    "test:pick": "BABEL_ENV=test mocha --require _tests/spinup/scaffolding --compilers js:babel-core/register -r jsdom-global/register",
+    "prepublish": "npm run build",
+    "lint": "eslint src tests",
+    "lint:fix": "eslint src tests --fix",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "package-self": "package-self"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theKashey/react-svg-atlas.git"
+  },
+  "keywords": [
+    "react",
+    "svg",
+    "speed",
+    "use",
+    "atlas",
+    "sprite"
+  ],
+  "author": "theKashey <thekashey@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theKashey/react-svg-atlas/issues"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.3.6",
+    "@storybook/addon-links": "^3.3.6",
+    "@storybook/react": "^3.3.6",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-plugin-transform-class-properties": "6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.0",
+    "chai-enzyme": "^0.8.0",
+    "enzyme": "^2.9.1",
+    "eslint": "^4.2.0",
+    "eslint-config-airbnb": "15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-react": "^7.3.0",
+    "jsdom": "11.1.0",
+    "jsdom-global": "3.0.2",
+    "mocha": "^3.4.2",
+    "package-self": "^1.1.1",
+    "react": "^15.6.1",
+    "react-addons-perf": "^15.4.2",
+    "react-dom": "^15.6.1",
+    "react-hot-loader": "^3.0.0-beta.7",
+    "react-test-renderer": "^15.6.1",
+    "sinon": "3.2.1",
+    "storybook": "^1.0.0"
+  },
+  "homepage": "https://github.com/theKashey/react-svg-atlas#readme",
+  "dependencies": {
+    "nanoevents": "^1.0.2",
+    "prop-types": "15.5.10",
+    "react-side-effect": "^1.1.3",
+    "shallow-equal": "^1.0.0",
+    "shallowequal": "^1.0.2"
+  }
+}
