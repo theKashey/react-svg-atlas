@@ -11,6 +11,7 @@ This is React version of [gulp-svgstore](https://github.com/w0rm/gulp-svgstore/)
 
 Combine svg files into one with `<symbol>` elements.
 Read more about this in [CSS Tricks article](http://css-tricks.com/svg-symbol-good-choice-icons/).
+> PS: The proper way to `isolate` SVG is to use SVGO's [prefixId](https://github.com/svg/svgo/blob/master/plugins/prefixIds.js) plugin
 
 # Usage
 1. Install
