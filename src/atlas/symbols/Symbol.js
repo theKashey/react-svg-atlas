@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const createSymbol = (svgRef, setRef, onUnmount) => {
   class Symbol extends PureComponent {
     static propTypes = {
-      id: PropTypes.string,
+      id: PropTypes.number,
       props: PropTypes.object,
       type: PropTypes.func,
     }

@@ -9,7 +9,7 @@ const createAtlas = (SymbolRenderer) => {
     };
 
     static propTypes = {
-      sprites: PropTypes.arrayOf(PropTypes.object).isRequired,
+      sprites: PropTypes.arrayOf(PropTypes.object),
     };
 
     state = {

@@ -13,19 +13,32 @@ const destroyElement = (element, workingContext) => {
   workingContext.notify();
 };
 
-const getElementIdentity = (element, renderedElements, globalCounter) => {
+const deepShallowEqual = (a, b) => {
+  const keys1 = Object.keys(a);
+  const keys2 = Object.keys(b);
+  if (keys1.length !== keys2.length) {
+    return false;
+  }
+  return keys1.reduce((acc, key) => (acc && shallowEqual(a[key], b[key])), true);
+};
+
+export const elementsAreEqual = (a, b) => (
+  a.type === b.type && deepShallowEqual(a.props, b.props)
+);
+
+const getElementIdentity = (element, renderedElements, globalCounter, autoCreate) => {
   let renderedItem;
 
   // speed optimization
   for (let i = 0; i < renderedElements.length; i++) {
     const re = renderedElements[i];
-    if (re.type === element.type && shallowEqual(re.props, element.props)) {
+    if (elementsAreEqual(re, element)) {
       renderedItem = re;
       break;
     }
   }
 
-  if (!renderedItem) {
+  if (!renderedItem && autoCreate) {
     renderedItem = {
       type: element.type,
       props: element.props,
@@ -46,7 +59,7 @@ const getElementIdentity = (element, renderedElements, globalCounter) => {
 
 const putIntoContainer = (sourceElement, context) => {
   const workingContext = (context[CONTEXT_ID] || globalContext);
-  const element = getElementIdentity(sourceElement, workingContext.sprites, workingContext);
+  const element = getElementIdentity(sourceElement, workingContext.sprites, workingContext, true);
 
   if (!element.created) {
     createElement(element, workingContext);
@@ -58,12 +71,14 @@ const putIntoContainer = (sourceElement, context) => {
 
 const popFromContainer = (sourceElement, context) => {
   const workingContext = (context[CONTEXT_ID] || globalContext);
-  const element = getElementIdentity(sourceElement, workingContext.sprites);
-  element.counter--;
-  if (!element.counter) {
-    workingContext.sprites = workingContext.sprites.filter(x => x !== element);
+  const element = getElementIdentity(sourceElement, workingContext.sprites, workingContext, false);
+  if (element) {
+    element.counter--;
+    if (!element.counter) {
+      workingContext.sprites = workingContext.sprites.filter(x => x !== element);
 
-    destroyElement(element, workingContext);
+      destroyElement(element, workingContext);
+    }
   }
 };
 

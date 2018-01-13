@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SVG from './testSVG';
-import inAtlas, {SVGAtlas} from '../src';
+import chromeTest from './chomeTest';
+import inAtlas from '../src';
 
 const TargetSVG = inAtlas(SVG);
 
@@ -17,11 +18,10 @@ class Test extends Component {
           <TargetSVG text="TWO"/>
           <TargetSVG text="THREE "/>
         </div>
-        <SVGAtlas/>
       </div>
     )
   }
 
 }
 
-export default Test;
+export default chromeTest(Test);

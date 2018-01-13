@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SVG from './testSVG';
-import inAtlas, {inIsolatedAtlas, SVGLocalAtlas, SVGBlobAtlas, SVGRasterAtlas, SVGAtlasContext} from '../src';
+import chromeTest from './chomeTest';
+import {inIsolatedAtlas} from '../src';
 
 const TargetSVG = inIsolatedAtlas(SVG);
 
@@ -14,7 +15,7 @@ const colors = [
 
 class Test extends Component {
   state = {
-    count: 3
+    count: 4
   };
 
   add = () => this.setState({count: this.state.count + 1});
@@ -37,22 +38,9 @@ class Test extends Component {
             />
           )}
         </div>
-        <this.props.atlas/>
       </div>
     )
   }
 }
 
-export default () => (
-  <div>
-    <SVGAtlasContext>
-      <div>local: <Test atlas={SVGLocalAtlas}/></div>
-    </SVGAtlasContext>
-    <SVGAtlasContext>
-      <div>blob: <Test atlas={SVGBlobAtlas}/></div>
-    </SVGAtlasContext>
-    <SVGAtlasContext>
-      <div>raster: <Test atlas={SVGRasterAtlas}/></div>
-    </SVGAtlasContext>
-  </div>
-)
+export default chromeTest(Test);

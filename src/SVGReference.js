@@ -1,24 +1,41 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { putIntoContainer, popFromContainer } from './fabric';
+import { putIntoContainer, popFromContainer, elementsAreEqual } from './fabric';
 import { CONTEXT_ID } from './context';
 
-const getDefaultSize = (meta, defaults = {}) => ({
-  // viewBox: meta.viewBox,
-  width: defaults.width || meta.width,
-  height: defaults.height || meta.height,
-});
+const getDefaultSize = (meta, defaults = {}, preserveAspectRatio) => {
+  const result = {
+    // viewBox: meta.viewBox,
+    width: defaults.width || meta.width,
+    height: defaults.height || meta.height,
+  };
+
+  if (preserveAspectRatio) {
+    const { aspect } = meta;
+
+    if (result.width !== meta.width) {
+      result.height = result.width * aspect;
+    }
+
+    if (result.height !== meta.height) {
+      result.width = result.height * aspect;
+    }
+  }
+
+  return result;
+};
 
 const passThought = a => a;
 
 class SVGReference extends PureComponent {
   static propTypes = {
-    children: PropTypes.element.isRequired.isRequired,
+    children: PropTypes.element.isRequired,
 
     className: PropTypes.string,
     style: PropTypes.object,
     width: PropTypes.any,
     height: PropTypes.any,
+    preserveAspectRatio: PropTypes.bool,
 
     getSize: PropTypes.func,
     transformLink: PropTypes.func,
@@ -38,13 +55,17 @@ class SVGReference extends PureComponent {
     xlink: undefined,
   };
 
+  eventHandler = null;
+
   componentWillMount() {
     this.getReference(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.children !== nextProps.children) {
-      this.getReference(nextProps, () => this.releaseReference());
+    const { children } = this.props;
+    if (!elementsAreEqual(children, nextProps.children)) {
+      this.removeEventHandler();
+      this.getReference(nextProps, () => popFromContainer(children, this.context));
     }
   }
 
@@ -53,27 +74,36 @@ class SVGReference extends PureComponent {
   }
 
   releaseReference = () => {
-    if (this.state.event) {
-      this.state.event();
-    }
+    this.removeEventHandler();
     popFromContainer(this.props.children, this.context);
   };
 
   getReference = (props, callback = passThought) => {
     const { xlink, meta, events } = putIntoContainer(props.children, this.context, this);
-    const event = !meta
+    this.eventHandler = !meta
       ? events.on('update', ({ meta, xlink }) => this.setState({ meta, xlink }, callback))
       : callback();
 
     this.setState({
       xlink,
       meta,
-      event,
     });
   };
 
+  removeEventHandler() {
+    if (this.eventHandler) {
+      this.eventHandler();
+      this.eventHandler = null;
+    }
+  }
+
   render() {
-    const { className, style, stroke, fill, getSize = getDefaultSize, width, height, isolation, transformLink = passThought } = this.props;
+    const {
+      className, style, stroke, fill,
+      getSize = getDefaultSize, width, height, preserveAspectRatio,
+      isolation,
+      transformLink = passThought,
+    } = this.props;
     const { xlink: stateLink, meta } = this.state;
 
     const styleTag = {
@@ -82,12 +112,12 @@ class SVGReference extends PureComponent {
       ...(fill ? { fill } : {}),
     };
 
-    const xlink = transformLink(stateLink, isolation);
+    const xlink = stateLink && transformLink(stateLink, isolation);
 
     return xlink && meta && (
       <svg
         className={className}
-        {...getSize(meta || {}, { width, height })}
+        {...getSize(meta || {}, { width, height }, preserveAspectRatio, getDefaultSize)}
         style={styleTag}
       >
         {
