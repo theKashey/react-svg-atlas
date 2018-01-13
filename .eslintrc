@@ -22,5 +22,15 @@
 
     // Turn off https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-named-as-default-member.md
     "import/no-named-as-default-member": 0,
+
+    "react/forbid-prop-types": 0,
+    "react/require-default-props": 0,
+    "react/sort-comp": 0,
+    "func-names": 0,
+    "no-multi-assign": 0,
+    "max-len" : 0,
+    "no-shadow": 0,
+    "no-param-reassign": 0,
+    "no-plusplus": 0
   }
 }

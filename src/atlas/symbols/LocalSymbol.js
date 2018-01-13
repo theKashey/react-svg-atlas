@@ -1,18 +1,18 @@
 import createSymbol from './Symbol';
-import getMeta from "./getMetaInformation";
+import getMeta from './getMetaInformation';
 
 const svgRef = id => `SVG-ATLAS-${id}`;
 
 const LocalSymbol = createSymbol(svgRef, function (ref) {
   const svg = ref.childNodes[0];
   const meta = getMeta(svg);
-  const {viewBox} = meta;
+  const { viewBox } = meta;
 
-  this.setState({viewBox});
+  this.setState({ viewBox });
 
-  const {element} = this.props;
+  const { element } = this.props;
 
-  element.meta = {...meta};
+  element.meta = { ...meta };
   element.xlink = `#${svgRef(this.props.id)}`;
   element.updated();
 });

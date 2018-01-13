@@ -1,6 +1,7 @@
+import NanoEvents from 'nanoevents';
 import shallowEqual from 'shallowequal';
 import { CONTEXT_ID, globalContext } from './context';
-import NanoEvents from 'nanoevents';
+
 
 const createElement = (element, workingContext) => {
   element.created = true;
@@ -16,7 +17,7 @@ const getElementIdentity = (element, renderedElements, globalCounter) => {
   let renderedItem;
 
   // speed optimization
-  for (let i = 0; i < renderedElements.length; ++i) {
+  for (let i = 0; i < renderedElements.length; i++) {
     const re = renderedElements[i];
     if (re.type === element.type && shallowEqual(re.props, element.props)) {
       renderedItem = re;

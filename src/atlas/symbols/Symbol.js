@@ -1,7 +1,14 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 const createSymbol = (svgRef, setRef, onUnmount) => {
   class Symbol extends PureComponent {
+    static propTypes = {
+      id: PropTypes.string,
+      props: PropTypes.object,
+      type: PropTypes.func,
+    }
+
     state = {
       props: {},
       viewBox: false,
@@ -20,10 +27,10 @@ const createSymbol = (svgRef, setRef, onUnmount) => {
     }
 
     render() {
-      const {id, type: Payload, props} = this.props;
-      const {viewBox} = this.state;
+      const { id, type: Payload, props } = this.props;
+      const { viewBox } = this.state;
       const symbolProps = {
-        ...(viewBox ? {viewBox} : {}),
+        ...(viewBox ? { viewBox } : {}),
       };
       return (
         <symbol id={svgRef(id)} key={id} {...symbolProps} ref={this.setRef}>

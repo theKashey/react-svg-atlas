@@ -24,7 +24,7 @@ export const createContext = () => ({
   },
 
   setAtlasLink(link, oldLink) {
-    if (!link && oldLink === this.atlasLink || !oldLink) {
+    if ((!link && oldLink === this.atlasLink) || !oldLink) {
       this.atlasLink = link;
     }
   },
