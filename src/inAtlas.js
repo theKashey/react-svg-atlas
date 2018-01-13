@@ -6,14 +6,14 @@ const pickFrom = (props, keep) => (
     .keys(props)
     .reduce(
       (acc, prop) => (
-        {...acc, ...(!keep[prop] ? {[prop]: props[prop]} : {})}
+        { ...acc, ...(!keep[prop] ? { [prop]: props[prop] } : {}) }
       ),
-      {}
+      {},
     )
 );
 
-export const constructAtlas = (keepProps) => (SVG) => {
-  const Component = (props) => <SVGReference {...props}><SVG {...pickFrom(props, keepProps)}/></SVGReference>;
+export const constructAtlas = keepProps => (SVG) => {
+  const Component = props => <SVGReference {...props}><SVG {...pickFrom(props, keepProps)} /></SVGReference>;
   Component.displayName = `${SVG.displayName || SVG.name}-in-atlas`;
 
   return Component;

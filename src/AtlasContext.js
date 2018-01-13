@@ -1,25 +1,27 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {CONTEXT_ID, createContext} from "./context";
+import { CONTEXT_ID, createContext } from './context';
 
 class AtlasContext extends Component {
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
   };
 
   static childContextTypes = {
-    [CONTEXT_ID]: PropTypes.any
+    [CONTEXT_ID]: PropTypes.any,
   };
+
+  svgContext = createContext();
 
   getChildContext() {
     return {
-      [CONTEXT_ID]: createContext,
+      [CONTEXT_ID]: this.svgContext,
     };
   }
 
-  render () {
+  render() {
     return React.Children.only(this.props.children);
   }
-};
+}
 
 export default AtlasContext;

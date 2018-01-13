@@ -7,9 +7,9 @@ export const createContext = () => ({
   sprites: [],
 
   notify() {
-    if(this.atlasLink){
+    if (this.atlasLink) {
       this.atlasLink();
-      return
+      return;
     }
 
     if (!this.notifyTm) {
@@ -24,10 +24,10 @@ export const createContext = () => ({
   },
 
   setAtlasLink(link, oldLink) {
-    if(!link && oldLink===this.atlasLink || !oldLink){
+    if (!link && oldLink === this.atlasLink || !oldLink) {
       this.atlasLink = link;
     }
-  }
+  },
 
 });
 

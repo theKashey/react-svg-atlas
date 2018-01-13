@@ -1,32 +1,33 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import {putIntoContainer, popFromContainer} from './fabric';
-import {CONTEXT_ID} from "./context";
+import { putIntoContainer, popFromContainer } from './fabric';
+import { CONTEXT_ID } from './context';
 
 const getDefaultSize = (meta, defaults = {}) => ({
-  //viewBox: meta.viewBox,
+  // viewBox: meta.viewBox,
   width: defaults.width || meta.width,
-  height: defaults.height || meta.height
+  height: defaults.height || meta.height,
 });
 
-class SVGReference extends PureComponent {
+const passThought = a => a;
 
+class SVGReference extends PureComponent {
   static propTypes = {
-    children: PropTypes.element.isRequired,
+    children: PropTypes.element.isRequired.isRequired,
     style: PropTypes.object,
     getSize: PropTypes.func,
     stroke: PropTypes.any,
     fill: PropTypes.any,
     variables: PropTypes.object,
-    isolation: PropTypes.bool
+    isolation: PropTypes.bool,
   };
 
   static contextTypes = {
-    [CONTEXT_ID]: PropTypes.any
+    [CONTEXT_ID]: PropTypes.any,
   };
 
   state = {
-    xlink: undefined
+    xlink: undefined,
   };
 
   componentWillMount() {
@@ -50,37 +51,39 @@ class SVGReference extends PureComponent {
   };
 
   getReference = (props) => {
-    const {xlink, meta, events} = putIntoContainer(props.children, this.context, this);
+    const { xlink, meta, events } = putIntoContainer(props.children, this.context, this);
     this.setState({
       xlink,
       meta,
-      event: !meta && events.on('update', ({meta, xlink}) => this.setState({meta, xlink}))
+      event: !meta && events.on('update', ({ meta, xlink }) => this.setState({ meta, xlink })),
     });
   };
 
   render() {
-    const {className, style, stroke, fill, getSize = getDefaultSize, width, height, isolation} = this.props;
-    const {xlink, meta} = this.state;
+    const { className, style, stroke, fill, getSize = getDefaultSize, width, height, isolation, xlink: transform = passThought } = this.props;
+    const { xlink: stateLink, meta } = this.state;
 
     const styleTag = {
-      ...(style ? style : {}),
-      ...(stroke ? {stroke} : {}),
-      ...(fill ? {fill} : {})
+      ...(style || {}),
+      ...(stroke ? { stroke } : {}),
+      ...(fill ? { fill } : {}),
     };
+
+    const xlink = transform(stateLink, isolation);
 
     return xlink && meta && (
       <svg
         className={className}
-        {...getSize(meta || {}, {width, height})}
+        {...getSize(meta || {}, { width, height })}
         style={styleTag}
       >
         {
           (isolation && xlink.indexOf('//') > 0 || (xlink.indexOf('#') < 0))
-            ? <image href={xlink} width="100%" height="100%"/>
-            : <use href={xlink} width="100%" height="100%"/>
+            ? <image href={xlink} width="100%" height="100%" />
+            : <use href={xlink} width="100%" height="100%" />
         }
       </svg>
-    ) || null;
+    );
   }
 }
 

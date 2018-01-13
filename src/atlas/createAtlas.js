@@ -1,20 +1,19 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import {CONTEXT_ID, globalContext} from "../context";
+import { CONTEXT_ID, globalContext } from '../context';
 
-const createAtlas = SymbolRenderer => {
+const createAtlas = (SymbolRenderer) => {
   class SVGAtlas extends PureComponent {
-
     static contextTypes = {
       [CONTEXT_ID]: PropTypes.any,
     };
 
     static propTypes = {
-      sprites: PropTypes.any
+      sprites: PropTypes.any,
     };
 
     state = {
-      generation: 0
+      generation: 0,
     };
 
     constructor(props, context) {
@@ -35,26 +34,26 @@ const createAtlas = SymbolRenderer => {
     updateSprites = () => {
       this.setState({
         sprites: this.props.sprites || this.boundContext.sprites,
-        generation: this.state.generation + 1
+        generation: this.state.generation + 1,
       });
     };
 
     render() {
-      const {sprites} = this.state;
+      const { sprites } = this.state;
       return (
-        <svg style={{position: 'absolute', overflow: 'hidden', left: 0, top: 0, width: 0,height:0}}>
+        <svg style={{ position: 'absolute', overflow: 'hidden', left: 0, top: 0, width: 0, height: 0 }}>
           {
-            sprites.map(({id, type, props}, index) =>
-              <SymbolRenderer key={id} id={id} type={type} props={props} element={sprites[index]}/>
+            sprites.map(({ id, type, props }, index) =>
+              <SymbolRenderer key={id} id={id} type={type} props={props} element={sprites[index]} />,
             )
           }
         </svg>
-      )
+      );
     }
   }
 
   return SVGAtlas;
-}
+};
 
 
 export default createAtlas;

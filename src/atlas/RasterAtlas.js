@@ -1,4 +1,4 @@
 import createAtlass from './createAtlas';
-import RasterSymbol from './RasterSymbol';
+import RasterSymbol from './symbols/RasterSymbol';
 
 export default createAtlass(RasterSymbol);

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SVG from './testSVG';
-import inAtlas, {inIsolatedAtlas, SVGAtlas, SVGRasterAtlas} from '../src';
+import inAtlas, {inIsolatedAtlas, SVGLocalAtlas, SVGBlobAtlas, SVGRasterAtlas, SVGAtlasContext} from '../src';
 
 const TargetSVG = inIsolatedAtlas(SVG);
 
@@ -37,11 +37,22 @@ class Test extends Component {
             />
           )}
         </div>
-        <SVGAtlas/>
+        <this.props.atlas/>
       </div>
     )
   }
-
 }
 
-export default Test;
+export default () => (
+  <div>
+    <SVGAtlasContext>
+      <div>local: <Test atlas={SVGLocalAtlas}/></div>
+    </SVGAtlasContext>
+    <SVGAtlasContext>
+      <div>blob: <Test atlas={SVGBlobAtlas}/></div>
+    </SVGAtlasContext>
+    <SVGAtlasContext>
+      <div>raster: <Test atlas={SVGRasterAtlas}/></div>
+    </SVGAtlasContext>
+  </div>
+)

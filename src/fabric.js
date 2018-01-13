@@ -1,5 +1,5 @@
 import shallowEqual from 'shallowequal';
-import {CONTEXT_ID, globalContext} from "./context";
+import { CONTEXT_ID, globalContext } from './context';
 import NanoEvents from 'nanoevents';
 
 const createElement = (element, workingContext) => {
@@ -35,9 +35,9 @@ const getElementIdentity = (element, renderedElements, globalCounter) => {
       events: new NanoEvents(),
       updated() {
         this.events.emit('update', this);
-      }
+      },
     };
-    renderedElements.push(renderedItem)
+    renderedElements.push(renderedItem);
   }
 
   return renderedItem;
@@ -68,5 +68,5 @@ const popFromContainer = (sourceElement, context) => {
 
 export {
   putIntoContainer,
-  popFromContainer
-}
+  popFromContainer,
+};

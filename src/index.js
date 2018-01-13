@@ -1,8 +1,8 @@
-import inAtlas, {inIsolatedAtlas, constructAtlas} from './inAtlas';
+import inAtlas, { inIsolatedAtlas, constructAtlas } from './inAtlas';
 
 import SVGReference from './SVGReference';
 
-import SVGAtlasContext from './AtlasContext'
+import SVGAtlasContext from './AtlasContext';
 
 import SVGLocalAtlas from './atlas/LocalAtlas';
 import SVGBlobAtlas from './atlas/BlobAtlas';
@@ -19,7 +19,7 @@ export {
   SVGRasterAtlas,
 
   SVGReference,
-  SVGAtlasContext
-}
+  SVGAtlasContext,
+};
 
 export default inAtlas;

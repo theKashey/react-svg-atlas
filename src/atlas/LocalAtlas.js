@@ -1,4 +1,4 @@
 import createAtlass from './createAtlas';
-import Symbol from './Symbol';
+import LocalSymbol from './symbols/LocalSymbol';
 
-export default createAtlass(Symbol);
+export default createAtlass(LocalSymbol);
