@@ -1,6 +1,6 @@
 import createSymbol from './Symbol';
 import getMeta from './getMetaInformation';
-import { fixXmlnsSpace } from './utils';
+import { fixXmlnsSpace, getSVGContent } from './utils';
 
 const HEADER = 'data:image/svg+xml;base64,';
 const XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>';
@@ -11,6 +11,18 @@ const fix = (svg, props = {}) => fixXmlnsSpace(svg).replace('<svg ', `<svg ${mak
 
 const svgRef = id => `RASTER_SVG-${id}`;
 
+const toBlob = (canvas, callback, onerror) => {
+  try {
+    /* eslint-disable no-unused-expressions */
+    (canvas.toBlob && canvas.toBlob(callback)) ||
+    // (canvas.msToBlob && canvas.msToBlob(callback)) ||
+    onerror();
+    /* eslint-enable */
+  } catch (e) {
+    onerror();
+  }
+};
+
 const RasterSymbol = createSymbol(svgRef, function (ref) {
   const svg = ref.childNodes[0];
   const meta = getMeta(svg);
@@ -19,7 +31,7 @@ const RasterSymbol = createSymbol(svgRef, function (ref) {
 
   const { element } = this.props;
 
-  const resultSVG = fix(svg.outerHTML, this.props.props);
+  const resultSVG = fix(getSVGContent(svg), this.props.props);
   const url = HEADER + btoa(resultSVG);
   const img = new Image();
   element.meta = { ...meta };
@@ -33,7 +45,7 @@ const RasterSymbol = createSymbol(svgRef, function (ref) {
     context.height = canvas.height = height * factor;
     context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-    canvas.toBlob((blob) => {
+    toBlob(canvas, (blob) => {
       this.blob = window.URL.createObjectURL(blob);
 
       element.meta = { ...meta };
@@ -41,7 +53,7 @@ const RasterSymbol = createSymbol(svgRef, function (ref) {
       element.xlink = `${this.blob}`;
 
       element.updated();
-    });
+    }, () => img.onerror());
   };
   img.onerror = function () {
     const id = svgRef(element.id);

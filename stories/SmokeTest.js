@@ -28,6 +28,7 @@ class Test extends Component {
         <button onClick={this.rem}>REM</button>
         ({this.state.count})
         <div>
+          <TargetSVG.wrappedComponent/>
           {(new Array(this.state.count)).fill(0).map((x, id) =>
             <TargetSVG
               key={id}

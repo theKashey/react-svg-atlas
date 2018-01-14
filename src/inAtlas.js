@@ -16,6 +16,7 @@ const pickFrom = (props, keep) => (
 export const constructAtlas = keepProps => (SVG) => {
   const Component = props => <SVGReference {...props}><SVG {...pickFrom(props, keepProps)} /></SVGReference>;
   Component.displayName = `${SVG.displayName || SVG.name}-in-atlas`;
+  Component.wrappedComponent = SVG;
   Component.propTypes = {
     ...SVGReference.propTypes,
     ...(SVG.propTypes || {}),

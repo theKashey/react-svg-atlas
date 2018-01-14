@@ -1,7 +1,7 @@
 import React from 'react';
 import {SVGLocalAtlas, SVGBlobAtlas, SVGRasterAtlas, SVGAtlasContext} from '../src';
 
-export default chrome = (Test) => () => (
+export default (Test) => () => (
   <div>
     <SVGAtlasContext>
       <div>local: <Test/><SVGLocalAtlas/></div>

@@ -1,6 +1,6 @@
 import createSymbol from './Symbol';
 import getMeta from './getMetaInformation';
-import { fixXmlnsSpace } from './utils';
+import { fixXmlnsSpace, getSVGContent } from './utils';
 
 const svgRef = id => `BLOB_SVG-${id}`;
 const XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>';
@@ -17,7 +17,7 @@ const BlobSymbol = createSymbol(svgRef, function (ref) {
   const { element } = this.props;
   const id = svgRef(element.id);
 
-  const blob = new Blob([XML_HEADER + fix(svg.outerHTML, id)], { type: 'image/svg+xml' });
+  const blob = new Blob([XML_HEADER + fix(getSVGContent(svg), id)], { type: 'image/svg+xml' });
   this.blob = window.URL.createObjectURL(blob);
 
   element.meta = { ...meta };

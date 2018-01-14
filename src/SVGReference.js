@@ -122,9 +122,10 @@ class SVGReference extends PureComponent {
       >
         {
           ((isolation && xlink.indexOf('//') > 0) || (xlink.indexOf('#') < 0))
-            ? <image href={xlink} width="100%" height="100%" />
-            : <use href={xlink} width="100%" height="100%" />
+            ? <image xlinkHref={xlink} width="100%" height="100%" />
+            : <use xlinkHref={xlink} width="100%" height="100%" />
         }
+
       </svg>
     );
   }

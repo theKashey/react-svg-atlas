@@ -4,8 +4,6 @@ const StarSVG = ({text}) => (
   <svg height="200" width="200" viewBox="0 0 200 200">
     <title>Star!</title>
     <polygon strokeWidth={2} points="100,10 40,198 190,78 10,78 160,198"/>
-    <polygon strokeWidth={2} points="100,10 40,198 190,78 10,78 160,198"/>
-    <polygon strokeWidth={2} points="100,10 40,198 190,78 10,78 160,198"/>
     <text color="#F00" x={10} y={50}>{text}</text>
   </svg>
 );
