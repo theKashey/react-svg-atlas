@@ -106,6 +106,27 @@ react-svg-atlas could greatly speed up React rendering times, but it cost more f
   
   <SVGReference {...someProps}><SVG {...anotherProps}/></SVGReference>;
 ```
+
+## Using the CSS styles with isolation.
+In case of isolation local CSS styles will NOT affect embed SVG.
+To let this happened just wrap SVG with a `RecomputeStyle`
+```js
+import inAtlas, {inIsolatedAtlas, RecomputeStyle} from 'react-svg-atlass';
+
+const SVG1 = inAtlas(SVG);        // will work is case you specify `isolation` prop
+const SVG2 = inIsolatedAtlas(SVG);// will work always
+
+<div style={{stroke:'red'}}>
+ <RecomputeStyle>
+   <SVG />
+ </RecomputeStyle>
+</div>
+
+//is equal to
+
+<SVG style={{stroke:'red'}}/>
+```
+The only thing you have to know - styled will be measured __once__.
   
 # SSR details
 To maintain consistency across renders - use SVGAtlasContext

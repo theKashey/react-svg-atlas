@@ -4,8 +4,9 @@ import { fixXmlnsSpace, getSVGContent } from './utils';
 
 const svgRef = id => `BLOB_SVG-${id}`;
 const XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>';
+const makeProps = ({ style = {} }) => `style="${Object.keys(style).map(key => `${key}:${style[key]}`).join(';')}"`;
 
-const fix = (svg, id) => fixXmlnsSpace(svg).replace('<svg ', `<svg id="${id}" `);
+const fix = (svg, id, props = {}) => fixXmlnsSpace(svg).replace('<svg ', `<svg id="${id}" ${makeProps(props)} `);
 
 const BlobSymbol = createSymbol(svgRef, function (ref) {
   const svg = ref.childNodes[0];
@@ -17,7 +18,7 @@ const BlobSymbol = createSymbol(svgRef, function (ref) {
   const { element } = this.props;
   const id = svgRef(element.id);
 
-  const blob = new Blob([XML_HEADER + fix(getSVGContent(svg), id)], { type: 'image/svg+xml' });
+  const blob = new Blob([XML_HEADER + fix(getSVGContent(svg), id, this.props.props)], { type: 'image/svg+xml' });
   this.blob = window.URL.createObjectURL(blob);
 
   element.meta = { ...meta };

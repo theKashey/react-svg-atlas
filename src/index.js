@@ -3,6 +3,7 @@ import inAtlas, { inIsolatedAtlas, constructAtlas } from './inAtlas';
 import SVGReference from './SVGReference';
 
 import SVGAtlasContext from './AtlasContext';
+import RecomputeStyle from './RecomputeStyle';
 
 import SVGLocalAtlas from './atlas/LocalAtlas';
 import RealSVGBlobAtlas from './atlas/BlobAtlas';
@@ -25,6 +26,7 @@ export {
 
   SVGReference,
   SVGAtlasContext,
+  RecomputeStyle,
 };
 
 export default inAtlas;

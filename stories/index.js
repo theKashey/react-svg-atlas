@@ -7,6 +7,7 @@ import PropTest from './PropTest';
 import PerformanceTest from './PerformanceTest';
 import MixedTest from './MixedTest';
 import VisaTest from './VisaTest';
+import StyleTest from './StyleTest';
 
 storiesOf('SVG', module)
   .add('atlas smoke', () => <SmokeTest />)
@@ -15,4 +16,5 @@ storiesOf('SVG', module)
   .add('performance', () => <PerformanceTest />)
   .add('mixed', () => <MixedTest />)
   .add('VisaTest', () => <VisaTest />)
+  .add('StyleTest', () => <StyleTest />)
 ;

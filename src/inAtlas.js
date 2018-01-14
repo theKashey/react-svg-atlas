@@ -1,17 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import passDownStyles from './passDownStyles';
 import SVGReference from './SVGReference';
 
-const pickFrom = (props, keep) => (
-  Object
+const passDownFalse = Object.keys(passDownStyles).reduce((acc, key) => {
+  acc[key] = false;
+  return acc;
+}, {});
+
+const pickFrom = (props, keepBase) => {
+  const keep = {
+    ...keepBase,
+    ...(props.isolation ? { ...passDownFalse } : {}),
+  };
+  return Object
     .keys(props)
     .reduce(
       (acc, prop) => (
         { ...acc, ...(!keep[prop] ? { [prop]: props[prop] } : {}) }
       ),
       {},
-    )
-);
+    );
+};
 
 export const constructAtlas = keepProps => (SVG) => {
   const Component = props => <SVGReference {...props}><SVG {...pickFrom(props, keepProps)} /></SVGReference>;
