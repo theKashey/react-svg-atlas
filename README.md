@@ -47,12 +47,15 @@ Keep in mind:
 
 # SVG Store
 There is a few different SVG stores avaialable
-1. SVGLocalStore, or SVGAtlas - default SVG store. Uses local SVG to store the data. SSR-friendly. Could not isolate sprites.
-2. SVGBlobStore - moves sprites off page, able to work in isolation. Require isolation to be set.
-3. SVGRasterStore - converts sprites to images, isolated by default.
+1. SVGLocalStore, or SVGAtlas - default SVG store. Uses local SVG to store the data. SSR-friendly. Could not isolate sprites. __Fast__.
+2. SVGBlobStore - moves sprites off page, able to work in isolation. Require isolation to be set. __Medium__.
+3. SVGRasterStore - converts sprites to images, isolated by default. __Slow__ to spinup, __fast__ to work.
 
 `Isolation` - one SVG could not soil another with parasite styles. In the same time you also could not set any styles.
 For `SVGBlobStore` require `isolation` prop to be set on SVG sprite.   
+
+## the difference?
+The best way to understand the difference, is to explore the storybook.
 
 # Benefits
 1. react-svg-atlas replaces your SVG with a simple `use` tag, keeping only the reference to the object.
