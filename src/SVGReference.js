@@ -27,6 +27,8 @@ const getDefaultSize = (meta, defaults = {}, preserveAspectRatio) => {
 
 const passThought = a => a;
 
+const stripHash = a => a.split('#')[0];
+
 class SVGReference extends PureComponent {
   static propTypes = {
     children: PropTypes.element.isRequired,
@@ -122,7 +124,7 @@ class SVGReference extends PureComponent {
       >
         {
           ((isolation && xlink.indexOf('//') > 0) || (xlink.indexOf('#') < 0))
-            ? <image xlinkHref={xlink} width="100%" height="100%" />
+            ? <image xlinkHref={stripHash(xlink)} width="100%" height="100%" />
             : <use xlinkHref={xlink} width="100%" height="100%" />
         }
 
