@@ -34,7 +34,6 @@ const RasterSymbol = createSymbol(svgRef, function (ref) {
   const img = new Image();
   element.meta = { ...meta };
   img.src = url;
-  console.log(url);
 
   img.onload = function () {
     setTimeout(() => {

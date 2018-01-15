@@ -1,6 +1,6 @@
 import createSymbol from './Symbol';
 import getMeta from './getMetaInformation';
-import {getSVGContent, svgAddXmlnsSpace, svgGetStyle, svgId, svgSetStyle} from './utils';
+import { getSVGContent, svgAddXmlnsSpace, svgGetStyle, svgId, svgSetStyle } from './utils';
 
 const svgRef = id => `BLOB_SVG-${id}`;
 const XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>';
