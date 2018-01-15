@@ -1,13 +1,11 @@
 import createSymbol from './Symbol';
 import getMeta from './getMetaInformation';
-import { fixXmlnsSpace, getSVGContent } from './utils';
+import { getSVGContent, svgAddXmlnsSpace, svgGetStyle, svgSetDimension, svgSetStyle } from './utils';
 
 const HEADER = 'data:image/svg+xml;base64,';
 const XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>';
 
-const makeProps = ({ style = {} }) => `style="${Object.keys(style).map(key => `${key}:${style[key]}`).join(';')}"`;
-
-const fix = (svg, props = {}) => fixXmlnsSpace(svg).replace('<svg ', `<svg ${makeProps(props)} `);
+const fix = (svg, meta, props = {}) => svgSetStyle(svgAddXmlnsSpace(svgSetDimension(svg, meta)), svgGetStyle(props));
 
 const svgRef = id => `RASTER_SVG-${id}`;
 
@@ -31,29 +29,32 @@ const RasterSymbol = createSymbol(svgRef, function (ref) {
 
   const { element } = this.props;
 
-  const resultSVG = fix(getSVGContent(svg), this.props.props);
-  const url = HEADER + btoa(resultSVG);
+  const resultSVG = getSVGContent(fix(svg, meta, this.props.props));
+  const url = HEADER + btoa(XML_HEADER + resultSVG);
   const img = new Image();
   element.meta = { ...meta };
   img.src = url;
+  console.log(url);
 
   img.onload = function () {
-    const factor = window.devicePixelRatio;
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    context.width = canvas.width = width * factor;
-    context.height = canvas.height = height * factor;
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    setTimeout(() => {
+      const factor = window.devicePixelRatio;
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      context.width = canvas.width = width * factor;
+      context.height = canvas.height = height * factor;
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-    toBlob(canvas, (blob) => {
-      this.blob = window.URL.createObjectURL(blob);
+      toBlob(canvas, (blob) => {
+        this.blob = window.URL.createObjectURL(blob);
 
-      element.meta = { ...meta };
+        element.meta = { ...meta };
 
-      element.xlink = `${this.blob}`;
+        element.xlink = `${this.blob}`;
 
-      element.updated();
-    }, () => img.onerror());
+        element.updated();
+      }, () => img.onerror());
+    }, 1);
   };
   img.onerror = function () {
     const id = svgRef(element.id);

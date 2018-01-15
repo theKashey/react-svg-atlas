@@ -4,7 +4,7 @@ import {SVGLocalAtlas, SVGBlobAtlas, SVGRasterAtlas, SVGAtlasContext} from '../s
 export default (Test) => () => (
   <div>
     <SVGAtlasContext>
-      <div>local: <Test/><SVGLocalAtlas/></div>
+      <div><SVGLocalAtlas/> local: <Test/></div>
     </SVGAtlasContext>
     <SVGAtlasContext>
       <div>blob: <Test/><SVGBlobAtlas/></div>

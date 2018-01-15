@@ -41,7 +41,8 @@ const createAtlas = (SymbolRenderer) => {
     render() {
       const { sprites } = this.state;
       return (
-        <svg style={{ display: 'none', position: 'absolute', overflow: 'hidden', left: 0, top: 0, width: 0, height: 0 }}>
+        // using `visibility-hidden`. In case of display none fill defs will be lost
+        <svg style={{ position: 'absolute', overflow: 'hidden', left: 0, top: 0, width: 0, height: 0 }}>
           {
             sprites.map(({ id, type, props }, index) =>
               (<SymbolRenderer
