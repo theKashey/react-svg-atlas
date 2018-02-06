@@ -1,6 +1,6 @@
 react-svg-atlas
 =============
-Use SVG store to greatly reduce HTML file size, and isolate one SVG from another.
+Use SVG store to greatly reduce HTML file size, and isolate one SVG from another. And make SVG composible again!
 This is React version of [gulp-svgstore](https://github.com/w0rm/gulp-svgstore/)
 
 [![NPM](https://nodei.co/npm/react-svg-atlas.png?downloads=true&stars=true)](https://nodei.co/npm/react-svg-atlas/)
@@ -12,6 +12,9 @@ This is React version of [gulp-svgstore](https://github.com/w0rm/gulp-svgstore/)
 Combine svg files into one with `<symbol>` elements.
 Read more about this in [CSS Tricks article](http://css-tricks.com/svg-symbol-good-choice-icons/).
 > PS: The proper way to `isolate` SVG is to use SVGO's [prefixId](https://github.com/svg/svgo/blob/master/plugins/prefixIds.js) plugin
+
+`And make SVG composible again!`?? 
+Yes - react-svg-atlas will also isolate one SVG from another making your application more predicatable. Making it right.
 
 # Usage
 1. Install
@@ -55,7 +58,7 @@ There is a few different SVG stores avaialable
 For `SVGBlobStore` require `isolation` prop to be set on SVG sprite.   
 
 ## the difference?
-The best way to understand the difference, is to explore the storybook.
+The best way to understand the difference, is to explore the storybook. Or explore example on CodeSandbox - https://codesandbox.io/s/k26937poxr
 
 # Benefits
 1. react-svg-atlas replaces your SVG with a simple `use` tag, keeping only the reference to the object.
