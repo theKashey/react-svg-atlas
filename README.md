@@ -3,7 +3,7 @@ react-svg-atlas
 Use SVG store to greatly reduce HTML file size, and isolate one SVG from another. And make SVG composible again!
 This is React version of [gulp-svgstore](https://github.com/w0rm/gulp-svgstore/)
 
-[![NPM](https://nodei.co/npm/react-svg-atlas.png?downloads=true&stars=true)](https://nodei.co/npm/react-svg-atlas/)
+[![NPM](https://nodei.co/npm/react-svg-atlas.png?downloads=true&stars=true)](https://nodei.co/npm/react-svg-atlas/) [![Greenkeeper badge](https://badges.greenkeeper.io/theKashey/react-svg-atlas.svg)](https://greenkeeper.io/)
 
 <img align="right" width="130" height="175"
      title="SVG Superman"
